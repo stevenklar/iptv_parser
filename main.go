@@ -49,14 +49,18 @@ func (iptv *IPTV) printUsers() {
 
 // printUser function to print a single user's info
 func (iptv *IPTV) printUser(user map[string]string) {
-	fmt.Println(user["login"])
-	fmt.Printf("\033[34m%s\033[0m\n", user["name"])
+	//fmt.Println(user["login"])
+	//fmt.Printf("\033[34m%s\033[0m\n", user["name"])
+
+  var output string
+
+  output += user["login"] + "\t"
+  output += user["name"] + "\t"
 
 	if user["password"] == "" {
-		fmt.Printf("\033[33m%s\033[0m\n", "MISSING PASSWORD")
+		output += "MISSING PASSWORD"
 	} else {
 		url := fmt.Sprintf("http://%s/player_api.php?username=%s&password=%s", iptv.host, user["login"], user["password"])
-		fmt.Println(url)
 		req, err := http.NewRequest("GET", url, nil)
 		if err != nil {
 			panic(err)
@@ -90,7 +94,8 @@ func (iptv *IPTV) printUser(user map[string]string) {
 
 		userInfo := values["user_info"].(map[string]interface{})
 		if userInfo["auth"].(float64) == 0 {
-			fmt.Printf("\033[31m%s\033[0m\n", "INVALID PASSWORD")
+			output += "INVALID PASSWORD"
+      fmt.Println(output)
 			return
 		}
 
@@ -99,10 +104,10 @@ func (iptv *IPTV) printUser(user map[string]string) {
     if err != nil {
       panic(err)
     }
-    fmt.Println(time.Unix(ts, 0).UTC().Format("02.01.2006 15:04:05"))
+    output += time.Unix(ts, 0).UTC().Format("02.01.2006 15:04:05") + "\t"
 	}
 
-	fmt.Println("======================")
+	fmt.Println(output)
 }
 
 func main() {
