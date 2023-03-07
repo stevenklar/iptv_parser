@@ -1,2 +1,2 @@
-users.csv
+*.csv
 __pycache__
