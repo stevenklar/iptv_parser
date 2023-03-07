@@ -49,9 +49,6 @@ func (iptv *IPTV) printUsers() {
 
 // printUser function to print a single user's info
 func (iptv *IPTV) printUser(user map[string]string) {
-	//fmt.Println(user["login"])
-	//fmt.Printf("\033[34m%s\033[0m\n", user["name"])
-
   var output string
 
   output += user["login"] + "\t"
@@ -75,15 +72,25 @@ func (iptv *IPTV) printUser(user map[string]string) {
 		}
 		defer resp.Body.Close()
 
+    if resp.ContentLength == 0 {
+      output += "INVALID_CONTENT_API"
+      fmt.Println(output)
+			return
+    }
+
     data, err := ioutil.ReadAll(resp.Body)
     if err != nil {
-        panic(err)
+      output += "INVALID_DATA_API"
+      fmt.Println(output)
+			return
     }
 
     var values map[string]interface{}
     err = json.Unmarshal(data, &values)
     if err != nil {
-        panic(err)
+      output += "INVALID_PASSWORD_API"
+      fmt.Println(output)
+			return
     }
 
 		// var values map[string]interface{}
