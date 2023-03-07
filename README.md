@@ -6,7 +6,7 @@ The IPTV Helper is a command-line tool that helps you manage IPTV user accounts.
 
 To install the IPTV Helper, you'll need to have Go installed on your system. Once you have Go installed, you can download and install the tool using the following command:
 ```sh
-go get github.com/stevenklar/iptv_parser
+go install github.com/stevenklar/iptv_parser
 ```
 
 This will download and install the tool into your `$GOPATH/bin` directory.
