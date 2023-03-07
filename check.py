@@ -30,7 +30,15 @@ class IPTV:
             print(color.WARNING + "MISSING PASSWORD" + color.ENDC)
         else:
             url = "http://%s/player_api.php?username=%s&password=%s" % (self.host, user['login'], user['password'])
-            response = urllib.request.urlopen(url)
+            print(url)
+            req = urllib.request.Request(
+                url,
+                data=None,
+                headers={
+                    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
+                }
+            )
+            response = urllib.request.urlopen(req)
             data = response.read()
             values = json.loads(data)
             user_info = values['user_info']
