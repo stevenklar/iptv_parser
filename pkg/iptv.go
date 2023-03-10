@@ -95,12 +95,12 @@ func (iptv *IPTV) GetUserExpiration(user *User) error {
 	var values map[string]interface{}
 	err = json.Unmarshal(data, &values)
 	if err != nil {
-		return fmt.Errorf("invalid password for user %s", user.Login)
+		return fmt.Errorf("unable to unmarshal data for user %s", user.Login)
 	}
 
 	userInfo := values["user_info"].(map[string]interface{})
 	if userInfo["auth"].(float64) == 0 {
-		return fmt.Errorf("invalid password for user %s", user.Login)
+		return fmt.Errorf("unable to read user_info for user %s", user.Login)
 	}
 
 	tsStr := userInfo["exp_date"].(string)
